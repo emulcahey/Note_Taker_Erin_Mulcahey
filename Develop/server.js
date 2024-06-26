@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000;
+const path = require('path');
 
 // Import routes
 const notesRoutes = require('./Routes/api.js');
@@ -16,7 +17,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Use routes
-// app.use('/notes', notesRoutes);
 app.use('/', htmlRoutes);
 app.use('/api', notesRoutes);
 

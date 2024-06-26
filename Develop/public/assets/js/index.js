@@ -1,3 +1,5 @@
+
+
 let noteForm;
 let noteTitle;
 let noteText;
@@ -34,11 +36,19 @@ const getNotes = () =>
     headers: {
       'Content-Type': 'application/json'
     }
-  });
+  })
+  // .then((response) => {
+  //   response.json()
+    // .then((notes) => {
+    //   for(const note of notes) {
+    //   document.getElementById('noteList').innerHTML += `<li class="list-group-item" data-note='${JSON.stringify(note)}'>${note.title}</li>`;
+    //   }
+    // })
+  // });
 
-const saveNote = async (note) => {
+const saveNote = (note) => {
   console.log("saving note: ", note);
-  await fetch('/api/notes', {
+  fetch('/api/notes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -83,13 +93,13 @@ const renderActiveNote = () => {
   }
 };
 
-const handleNoteSave = async () => {
+const handleNoteSave = () => {
  // console.log("handleNoteSave", noteTitle.value, noteText.value);
   const newNote = {
     title: noteTitle.value,
     text: noteText.value
   };
-  await saveNote(newNote)
+  saveNote(newNote)
   
   // .then(() => {
   //   getAndRenderNotes();
@@ -142,11 +152,15 @@ const handleRenderBtns = () => {
 };
 
 // Render the list of note titles
-const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
+const renderNoteList = (notes) => {
+  let jsonNotes;
+  let notePromise = notes.json();
+  notePromise.then((data) => {
+    jsonNotes = data;
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
+  });
 
   let noteListItems = [];
 

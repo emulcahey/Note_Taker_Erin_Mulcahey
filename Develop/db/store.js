@@ -5,26 +5,15 @@ const path = require("path");
 
 
 class Store {
-    async read() {
-        console.log("read");
-        return await fs.readFile (path.join(__dirname, "db.json"), "utf8");
+    read() {
+        return fs.readFileSync (path.resolve(__dirname, "db.json"), "utf8");
     }
 
-    async write(note) {
-        console.log("write");
-        return await fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(note));
-    }
-
-    async getNotes() {
-        console.log("getNotes");
-        return await this.read();
-    }
-
-    async addNotes(note) {
-        console.log("addNotes new note:", note);
-        const notes = await this.getNotes()
-        // await notes.push(note);
-        await this.write(notes);
+    write(note) {
+        let file = this.read();
+        let notes = JSON.parse(file);
+        notes.push(note);
+        fs.writeFileSync(path.resolve(__dirname, "db.json"), JSON.stringify(notes));
     }
 
     removeNotes(id) {
