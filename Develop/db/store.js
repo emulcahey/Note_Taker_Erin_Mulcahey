@@ -11,16 +11,11 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 class Store {
     async read() {
-        // console.log("read")
-        // return fs.readFileSync (path.resolve(__dirname, "db.json"), "utf8");
+
         return await readFileAsync("db/db.json", "utf8");
     }
 
     write(note) {   
-        // let file = this.read();
-        // let notes = JSON.parse(file);
-        // notes.push(note);
-        // fs.writeFileSync(path.resolve(__dirname, "db.json"), JSON.stringify(notes));
         return writeFileAsync("db/db.json", JSON.stringify(note));
     }
 
@@ -32,7 +27,6 @@ class Store {
             } catch (err) {
                 parsedNotes = [];
             }
-            //console.log("parsedNotes: ", parsedNotes)
             return parsedNotes;
         });
     }
@@ -43,11 +37,6 @@ class Store {
         this.write(newNotes);
     }
 
-    // addNote = (req, res, next) => {
-    //     store.write(req.body);
-    //     res.send("New Note Created Via Post Request");
-    //   };
-
     addNote(note){
         console.log("note", note)
         const { title, text } = note;
@@ -56,12 +45,6 @@ class Store {
         }
         const newNote = { title, text, id: uuidv4() };
         console.log("newnote", newNote )
-        // const notes = await this.getNotes()
-        // console.log("notes", this.getNotes())
-        // notes.push(newNote)
-        // //aray
-        // await this.write(notes)
-        // return newNote;
 
         return this.getNotes()
             .then((notes) => [...notes, newNote])

@@ -106,18 +106,12 @@ const renderActiveNote = () => {
 };
 
 const handleNoteSave = () => {
- // console.log("handleNoteSave", noteTitle.value, noteText.value);
   const newNote = {
     title: noteTitle.value,
     text: noteText.value
   };
   saveNote(newNote)
   location.reload();
-  
-  // .then(() => {
-  //   getAndRenderNotes();
-  //   renderActiveNote();
-  // });
 };
 
 // Delete the clicked note
@@ -132,9 +126,11 @@ const handleNoteDelete = (e) => {
     activeNote = {};
   }
 
-  deleteNote(noteId).then(() => {
+  deleteNote(noteId).then((response) => {
+    if (response.ok) {
     getAndRenderNotes();
     renderActiveNote();
+    }
   });
 };
 

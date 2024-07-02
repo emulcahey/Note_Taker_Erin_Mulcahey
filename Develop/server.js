@@ -7,10 +7,6 @@ const path = require('path');
 const notesRoutes = require('./Routes/api');
 const htmlRoutes = require('./Routes/htmlRoute');
 
-//,{index:false,extensions:['html']}
-
-// app.get('/', (req, res) => res.render('index.html'));
-
 //body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
