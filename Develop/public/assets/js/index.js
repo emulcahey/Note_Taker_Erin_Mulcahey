@@ -36,16 +36,7 @@ const getNotes = async () => {
       'Content-Type': 'application/json'
     }
   })
-  // .then((response) => {
-  //     response.json()
-  //     .then((notes) => {
-  //         return notes;
-      // for(const note of notes) {
-        // document.getElementById('noteList').innerHTML += `<li class="list-group-item" data-note='${JSON.stringify(note)}'>${note.title}</li>`;
-        // }
-        //   })
-        // });
-      }
+}
         
 const saveNote = (note) => {
   console.log("saving note: ", note);
@@ -61,22 +52,10 @@ const saveNote = (note) => {
       console.log("response ok");
       return;    
   } else {console.log("response not ok", response)}
-  // throw new Error('Request tttttt failed!', response);
   }).catch((error) => {
     console.log("error", error);
   })
 };
-
-// const saveNote = (note) =>
-//   fetch('/api/notes', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(note)
-//   });
-
-
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
@@ -128,6 +107,7 @@ const handleNoteDelete = (e) => {
 
   deleteNote(noteId).then((response) => {
     if (response.ok) {
+      location.reload();
     getAndRenderNotes();
     renderActiveNote();
     }
@@ -171,7 +151,6 @@ const getNotesAndRenderNoteList = () => {
   }).then((response) => {
     response.json()
     .then((notes) => {
-      // console.log('notes: ', notes);
       renderNoteList(notes);
     });
   
